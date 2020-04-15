@@ -133,6 +133,11 @@ public class SeatingChartJavascriptInterface extends SeatsioJavascriptInterface 
     }
 
     @JavascriptInterface
+    public Boolean isObjectSelectable(String object) {
+        return config.isObjectSelectable.apply(GSON.fromJson(object, SeatsioObject.class));
+    }
+
+    @JavascriptInterface
     public void asyncCallSuccess(String result, String requestId) {
         seatsioWebView.onAsyncCallSuccess(result, requestId);
     }

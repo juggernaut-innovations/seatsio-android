@@ -157,6 +157,7 @@ public class SeatingChartConfig {
     public Consumer<SeatingChartView> onChartRendered;
     public Consumer<SeatingChartView> onChartRenderingFailed;
     public Function<Float, String> priceFormatter;
+    public Function<SeatsioObject, Boolean> isObjectSelectable;
 
     @Expose
     public String _client = "android";
@@ -455,6 +456,11 @@ public class SeatingChartConfig {
         return this;
     }
 
+    public SeatingChartConfig setIsObjectSelectable(Function<SeatsioObject, Boolean> isObjectSelectable) {
+        this.isObjectSelectable = isObjectSelectable;
+        return this;
+    }
+
     public String toJson() {
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -526,6 +532,10 @@ public class SeatingChartConfig {
 
         if (priceFormatter != null) {
             configAsJsonWithoutLastChar += ", priceFormatter: price => Native.formatPrice(price)";
+        }
+
+        if (isObjectSelectable != null) {
+            configAsJsonWithoutLastChar += ", isObjectSelectable: object => Native.isObjectSelectable(JSON.stringify(object))";
         }
 
         if (objectLabel != null) {
