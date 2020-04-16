@@ -138,6 +138,11 @@ public class SeatingChartJavascriptInterface extends SeatsioJavascriptInterface 
     }
 
     @JavascriptInterface
+    public String getObjectColor(String object) {
+        return config.getObjectColor.apply(GSON.fromJson(object, SeatsioObject.class));
+    }
+
+    @JavascriptInterface
     public void asyncCallSuccess(String result, String requestId) {
         seatsioWebView.onAsyncCallSuccess(result, requestId);
     }

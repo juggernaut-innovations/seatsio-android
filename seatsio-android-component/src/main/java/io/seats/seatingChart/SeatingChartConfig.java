@@ -158,6 +158,7 @@ public class SeatingChartConfig {
     public Consumer<SeatingChartView> onChartRenderingFailed;
     public Function<Float, String> priceFormatter;
     public Function<SeatsioObject, Boolean> isObjectSelectable;
+    public Function<SeatsioObject, String> getObjectColor;
 
     @Expose
     public String _client = "android";
@@ -461,6 +462,11 @@ public class SeatingChartConfig {
         return this;
     }
 
+    public SeatingChartConfig setGetObjectColor(Function<SeatsioObject, String> getObjectColor) {
+        this.getObjectColor = getObjectColor;
+        return this;
+    }
+
     public String toJson() {
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -560,6 +566,10 @@ public class SeatingChartConfig {
 
         if (sectionColor != null) {
             configAsJsonWithoutLastChar += ", sectionColor: " + sectionColor;
+        }
+
+        if (getObjectColor != null) {
+            configAsJsonWithoutLastChar += ", objectColor: object => Native.getObjectColor(JSON.stringify(object))";
         }
 
         configAsJson = configAsJsonWithoutLastChar + "}";
